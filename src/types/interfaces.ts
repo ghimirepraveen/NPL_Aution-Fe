@@ -62,3 +62,25 @@ export interface PlayerType {
   basePrice: number;
   image: string;
 }
+
+export interface TeamType {
+  _id: string;
+  fullName: string;
+  email: string;
+  contact: string;
+  image: string;
+
+  //more data
+}
+
+export interface TeamRequest {
+  fullName: string;
+  email: string;
+  contact: string;
+  image: string;
+}
+export interface TeamUpdateRequest {
+  fullName: string;
+  contact: string;
+  image: string;
+}

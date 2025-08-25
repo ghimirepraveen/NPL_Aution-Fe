@@ -37,3 +37,5 @@ export const ThankYouPage = React.lazy(
 export const Player = React.lazy(
   () => import("../components/admin/player/player")
 );
+
+export const Team = React.lazy(() => import("../components/admin/team/teams"));

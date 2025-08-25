@@ -7,6 +7,7 @@ import {
   ThankYouPage,
   PlayerRegistration,
   Player,
+  Team,
 } from "./import";
 
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: "players",
             element: <Player />,
+          },
+          {
+            path: "teams",
+            element: <Team />,
           },
         ],
       },

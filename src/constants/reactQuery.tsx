@@ -8,6 +8,10 @@ const queryKeys = {
       list: "adminPlayerList",
       details: "adminPlayerDetails",
     },
+    team: {
+      list: "adminTeamList",
+      details: "adminTeamDetails",
+    },
   },
 };
 
