@@ -69,9 +69,9 @@ const Login = () => {
       authData.data.userType === "Admin" ||
       authData.data.userType === "SuperAdmin"
     ) {
-      navigate("/admin/dashboard");
+      navigate("/admin");
     } else if (authData.data.userType === "Team") {
-      navigate("/admin/team");
+      navigate("/team");
     }
   }, [authData, navigate]);
 

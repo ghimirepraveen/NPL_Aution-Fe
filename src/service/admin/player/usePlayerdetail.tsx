@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import queryKeys from "../../constants/reactQuery";
-import fetcher from "../fetcher";
+import queryKeys from "../../../constants/reactQuery";
+import fetcher from "../../fetcher";
 
 type PlayerDetailsQueryParams = { id: string | number };
 

@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Table, Input, Button } from "antd";
 
-import useTeamFetch from "../../../service/team/useTeamFetch";
+import useTeamFetch from "../../../service/admin/team/useTeamFetch";
+import { useNavigate } from "react-router-dom";
+import { GrFormView } from "react-icons/gr";
 
 import TeamFormModal from "../team/form/teamModel";
 import TableSkeleton from "../../skeleton/tableSkeleton/TableSkeleton";
@@ -25,6 +27,7 @@ export default function Team() {
   const [showTeamFormModal, setShowTeamFormModal] = React.useState(false);
 
   const { isLoading, data } = useTeamFetch(queryParams);
+  const navigate = useNavigate();
 
   const handlePaginationChange = (pagination: TablePaginationConfig) => {
     setQueryParams({
@@ -65,9 +68,9 @@ export default function Team() {
     setShowTeamFormModal(true);
   };
 
-  const handleViewTeam = (Team: TeamType) => {
-    setActiveTeam(Team);
-    setShowTeamFormModal(true);
+  const handleViewTeam = (team: TeamType) => {
+    //navigate to team details page
+    navigate(`/admin/teams/${team._id}`);
   };
 
   const hideTeamFormModal = () => {
@@ -118,27 +121,15 @@ export default function Team() {
             title="View"
             onClick={() => handleViewTeam(record as TeamType)}
           >
-            <IoSettingsOutline className="text-2xl text-neutral-500" />
+            <GrFormView className="text-4xl text-neutral-500" />
           </span>
+
           <span
             role="button"
             title="Edit"
             onClick={() => handleEditTeam(record as TeamType)}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-blue-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487a2.25 2.25 0 1 1 3.182 3.182L7.5 20.213l-4 1 1-4 13.362-13.362z"
-              />
-            </svg>
+            <IoSettingsOutline className="text-2xl text-neutral-500" />
           </span>
         </div>
       ),

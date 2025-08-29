@@ -5,6 +5,7 @@ import { AiOutlineDashboard } from "react-icons/ai";
 
 import { IoIosFlag } from "react-icons/io";
 import { MdGroups2 } from "react-icons/md";
+import { IoIosSettings } from "react-icons/io";
 
 import useMisc from "../../../hooks/useMics";
 import { SUPER_ADMIN, ADMIN } from "../../../constants/userRole";
@@ -24,7 +25,7 @@ export default function AdminLayoutSider({
   const isAdmin = authData?.data?.userType?.includes(ADMIN) ? true : false;
 
   const menuItems = [
-    {
+    (isSuperAdmin || isAdmin) && {
       key: "/admin",
       label: <Link to="/admin">Dashboard</Link>,
       icon: <AiOutlineDashboard />,
@@ -33,13 +34,23 @@ export default function AdminLayoutSider({
 
     (isSuperAdmin || isAdmin) && {
       key: "/admin/players",
-      label: "Players",
+      label: <Link to="/admin/players">Players</Link>,
       icon: <MdGroups2 />,
     },
     (isSuperAdmin || isAdmin) && {
       key: "/admin/teams",
-      label: "Teams",
+      label: <Link to="/admin/teams">Teams</Link>,
       icon: <IoIosFlag />,
+    },
+    (isSuperAdmin || isAdmin) && {
+      key: "/admin/settings",
+      label: <Link to="/admin/settings">Settings</Link>,
+      icon: <IoIosSettings />,
+    },
+    (isSuperAdmin || isAdmin) && {
+      key: "/admin/email-templates",
+      label: <Link to="/admin/email-templates">Email Templates</Link>,
+      icon: <IoIosSettings />,
     },
   ].filter(Boolean) as MenuProps["items"];
 

@@ -1,16 +1,17 @@
 import * as React from "react";
-import { Table, Input, Button } from "antd";
+import { Table, Input } from "antd";
 
-import usePlayerFetch from "../../../service/admin/player/usePlayerFetch";
+import useEmailTemplateFetch from "../../../service/admin/emailTemplet/useEmailTempletFetch";
 
-import PlayerFormModal from "../player/form/playerModel";
 import TableSkeleton from "../../skeleton/tableSkeleton/TableSkeleton";
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoMdSettings } from "react-icons/io";
 
-import type { PlayerType } from "../../../types/interfaces";
+import type { EmailTemplateType } from "../../../types/interfaces";
 import type { TablePaginationConfig } from "antd";
+import { useNavigate } from "react-router-dom";
 
-export default function Player() {
+export default function EmailTemplate() {
+  const navigate = useNavigate();
   const [queryParams, setQueryParams] = React.useState<{
     page: number;
     limit: number;
@@ -21,12 +22,7 @@ export default function Player() {
     search: undefined,
   });
 
-  const [activePlayer, setActivePlayer] = React.useState<PlayerType | null>(
-    null
-  );
-  const [showPlayerFormModal, setShowPlayerFormModal] = React.useState(false);
-
-  const { isLoading, data } = usePlayerFetch(queryParams);
+  const { isLoading, data } = useEmailTemplateFetch(queryParams);
 
   const handlePaginationChange = (pagination: TablePaginationConfig) => {
     setQueryParams({
@@ -61,20 +57,8 @@ export default function Player() {
       search: value as string,
     });
   };
-
-  const handleAddPlayer = () => {
-    setActivePlayer(null);
-    setShowPlayerFormModal(true);
-  };
-
-  const handleViewPlayer = (player: PlayerType) => {
-    setActivePlayer(player);
-    setShowPlayerFormModal(true);
-  };
-
-  const hidePlayerFormModal = () => {
-    setActivePlayer(null);
-    setShowPlayerFormModal(false);
+  const handleViewEmailTemplate = (record: EmailTemplateType) => {
+    navigate(`/admin/email-template/${record?.slug}`);
   };
 
   const columns = [
@@ -85,43 +69,9 @@ export default function Player() {
         (queryParams?.page - 1) * queryParams?.limit + (index + 1),
     },
     {
-      title: "Player Name",
-      dataIndex: "fullName",
+      title: "Subject",
+      dataIndex: "subject",
     },
-    {
-      title: "Email",
-      dataIndex: "email",
-    },
-    {
-      title: "Contact Number",
-      dataIndex: "contactNumber",
-    },
-    {
-      title: "Category",
-      dataIndex: "category",
-    },
-    {
-      title: "Base Rate",
-      dataIndex: "baseRate",
-    },
-    {
-      title: "Sequence No",
-      dataIndex: "SN",
-    },
-
-    {
-      title: "Created At",
-      dataIndex: "createdAt",
-      render: (createdAt: string) => {
-        const date = new Date(createdAt);
-        return date.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        });
-      },
-    },
-
     {
       title: "Action",
       key: "action",
@@ -129,9 +79,9 @@ export default function Player() {
         <div className="flex items-center gap-4">
           <span
             role="button"
-            onClick={() => handleViewPlayer(record as PlayerType)}
+            onClick={() => handleViewEmailTemplate(record as EmailTemplateType)}
           >
-            <IoSettingsOutline className="text-2xl text-neutral-500" />
+            <IoMdSettings className="text-2xl text-neutral-500" />
           </span>
         </div>
       ),
@@ -140,14 +90,10 @@ export default function Player() {
 
   return (
     <div>
-      <div className="flex justify-end">
-        <Button type="primary" onClick={handleAddPlayer}>
-          Create New Player
-        </Button>
-      </div>
+      <div className="flex justify-end"></div>
       <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-3xl font-semibold capitalize text-neutral-700">
-          Player{" "}
+          EmailTemplate{" "}
           {data?.data?.pagination?.total
             ? ` (${data?.data?.pagination?.total})`
             : ""}
@@ -175,27 +121,9 @@ export default function Player() {
             }}
             onChange={handlePaginationChange}
             scroll={{ x: true }}
-            rowClassName={(record: PlayerType) => {
-              switch (record.category) {
-                case "A":
-                  return "bg-blue-100";
-                case "B":
-                  return "bg-green-100";
-                case "C":
-                  return "bg-yellow-100";
-                default:
-                  return "";
-              }
-            }}
           />
         )}
       </div>
-
-      <PlayerFormModal
-        open={showPlayerFormModal}
-        activePlayer={activePlayer}
-        hideModal={hidePlayerFormModal}
-      />
     </div>
   );
 }

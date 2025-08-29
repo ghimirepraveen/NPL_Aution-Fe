@@ -39,3 +39,22 @@ export const Player = React.lazy(
 );
 
 export const Team = React.lazy(() => import("../components/admin/team/teams"));
+
+export const TeamDetail = React.lazy(
+  () => import("../components/pages/team/teamDetailPage")
+);
+export const SiteSetting = React.lazy(
+  () => import("../components/admin/siteSetting/siteSetting")
+);
+
+export const EmailTemplate = React.lazy(
+  () => import("../components/admin/emailTemplet/emailTemplet")
+);
+
+export const EmailTemplateForm = React.lazy(
+  () => import("../components/admin/emailTemplet/form/emailTempletForm")
+);
+
+export const PlayerDetail = React.lazy(
+  () => import("../components/pages/player/playerDetail")
+);

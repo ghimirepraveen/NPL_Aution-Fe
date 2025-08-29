@@ -69,8 +69,8 @@ export default function AdminLayoutHeader({
           alignItems: "center",
           gap: "0.5rem",
           borderRadius: "0.625rem",
-          border: "1px soild #fafafa",
-          background: "#fff",
+          border: "1px solid #fafafa",
+          background: "#97CBA9",
           padding: "0.5rem 1rem",
           boxShadow:
             "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",

@@ -2,8 +2,8 @@ import * as React from "react";
 import { Modal, Form, Input, Button } from "antd";
 import type { TeamType, TeamRequest } from "../../../../types/interfaces";
 
-import useTeamCreate from "../../../../service/team/useTeamRegisteration";
-import useTeamEdit from "../../../../service/team/useTeamEdit";
+import useTeamCreate from "../../../../service/admin/team/useTeamRegisteration";
+import useTeamEdit from "../../../../service/admin/team/useTeamEdit";
 
 export default function TeamFormModal({
   open,

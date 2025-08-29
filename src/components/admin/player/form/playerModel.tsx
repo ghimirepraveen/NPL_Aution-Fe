@@ -5,7 +5,7 @@ import type {
   PlayerRegistrationData,
 } from "../../../../types/interfaces";
 
-import usePlayerCreate from "../../../../service/player/usePlayerRegisteration";
+import usePlayerCreate from "../../../../service/admin/player/usePlayerRegisteration";
 
 export default function PlayerFormModal({
   open,

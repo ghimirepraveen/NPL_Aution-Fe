@@ -27,6 +27,7 @@ export default function AdminLayout() {
             position: "fixed",
             top: 0,
             bottom: 0,
+            color: "#003893",
             left: 0,
             overflowX: "hidden",
             overflowY: "auto",
@@ -62,7 +63,7 @@ export default function AdminLayout() {
             right: 0,
             zIndex: 999,
             cursor: "pointer",
-            background: "rgba(0,0,0,0.5)",
+            background: "#97CBA9",
             transition: "all 0.3s",
           }}
         />
@@ -77,7 +78,7 @@ export default function AdminLayout() {
             right: 0,
             zIndex: 999,
             overflow: "hidden",
-            background: "#fff",
+            background: "#003893",
             transition: "all 0.3s",
           }}
         >
@@ -87,7 +88,7 @@ export default function AdminLayout() {
               width: "100%",
               overflow: "auto",
               whiteSpace: "nowrap",
-              color: "#44403c",
+              color: "#97CBA9",
             }}
           >
             <AdminLayoutSider closeMenu={closeMenu} />
@@ -106,7 +107,7 @@ export default function AdminLayout() {
             style={{
               flex: 1,
               borderRadius: "0.625rem",
-              border: "1px solid #fafafa",
+              border: "1px solid #003893",
               background: "#fff",
               padding: "1rem",
               boxShadow:

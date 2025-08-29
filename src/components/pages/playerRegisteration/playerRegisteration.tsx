@@ -1,6 +1,6 @@
 import Title from "antd/es/typography/Title";
 import { Form, Input, Button, Select } from "antd";
-import usePlayerRegistration from "../../../service/player/usePlayerRegisteration";
+import usePlayerRegistration from "../../../service/admin/player/usePlayerRegisteration";
 import type { PlayerRegistrationData } from "../../../types/interfaces";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

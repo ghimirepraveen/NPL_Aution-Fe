@@ -12,6 +12,16 @@ const queryKeys = {
       list: "adminTeamList",
       details: "adminTeamDetails",
     },
+    site: {
+      settings: "adminSiteSettings",
+    },
+    emailTemplet: {
+      list: "adminEmailTempletList",
+      details: "adminEmailTempletDetails",
+    },
+    bidLog: {
+      list: "adminBidLogList",
+    },
   },
 };
 

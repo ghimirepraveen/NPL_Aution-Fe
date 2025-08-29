@@ -1,6 +1,6 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import fetcher from "../fetcher";
-import queryKeys from "../../constants/reactQuery";
+import fetcher from "../../fetcher";
+import queryKeys from "../../../constants/reactQuery";
 
 export default function useTeamFetch(queryParams = {}) {
   const query = new URLSearchParams(

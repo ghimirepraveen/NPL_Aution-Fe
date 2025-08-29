@@ -8,6 +8,11 @@ import {
   PlayerRegistration,
   Player,
   Team,
+  TeamDetail,
+  SiteSetting,
+  EmailTemplate,
+  EmailTemplateForm,
+  PlayerDetail,
 } from "./import";
 
 const router = createBrowserRouter([
@@ -45,9 +50,31 @@ const router = createBrowserRouter([
             path: "players",
             element: <Player />,
           },
+
+          {
+            path: "player/:id",
+            element: <PlayerDetail />,
+          },
+
           {
             path: "teams",
             element: <Team />,
+          },
+          {
+            path: "teams/:id",
+            element: <TeamDetail />,
+          },
+          {
+            path: "settings",
+            element: <SiteSetting />,
+          },
+          {
+            path: "email-templates",
+            element: <EmailTemplate />,
+          },
+          {
+            path: "email-template/:slug",
+            element: <EmailTemplateForm />,
           },
         ],
       },

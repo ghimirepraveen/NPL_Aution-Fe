@@ -1,3 +1,22 @@
+// Site setting type for auction budget and increments
+export interface SiteSetting {
+  maxBudgetForATeam: number;
+  maxBudgetForACategoryPlayer: number;
+  maxBudgetForBCategoryPlayer: number;
+  baseBudgetForACategoryPlayer: number;
+  baseBudgetForBCategoryPlayer: number;
+  incrementBudgetForCCategoryPlayer: number;
+  incrementBudgetForBCategoryPlayer: number;
+  incrementBudgetForACategoryPlayer: number;
+}
+// Player type for team players array
+export interface Player {
+  _id: string;
+  category: string;
+  fullName: string;
+  image: string;
+  bidWinningRate: number;
+}
 export interface ErrorData {
   title?: string;
   message?: string;
@@ -83,4 +102,37 @@ export interface TeamUpdateRequest {
   fullName: string;
   contact: string;
   image: string;
+}
+export interface PlayerProfileCardProps {
+  imageUrl: string;
+  title?: string;
+  bidWinningRate?: number;
+}
+
+export interface Player {
+  _id: string;
+  category: string;
+  fullName: string;
+  image: string;
+  bidWinningRate: number;
+}
+
+export interface EmailTemplate {
+  subject: string;
+  content: string;
+}
+
+export interface EmailTemplate {
+  subject: string;
+  content: string;
+  keywords: string[];
+}
+
+export interface EmailTemplateType {
+  _id: string;
+  slug: string;
+  subject: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
 }

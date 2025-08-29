@@ -1,13 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import mutator from "../mutator";
+import mutator from "../../mutator";
 import type {
   PlayerRegistrationData,
   SuccessData,
-} from "../../types/interfaces";
+} from "../../../types/interfaces";
 
-import handleSuccess from "../../utils/handler/success";
+import handleSuccess from "../../../utils/handler/success";
 import { useQueryClient } from "@tanstack/react-query";
-import queryKeys from "../../constants/reactQuery";
+import queryKeys from "../../../constants/reactQuery";
 
 export default function usePlayerRegistration() {
   const queryClient = useQueryClient();
