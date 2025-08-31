@@ -26,6 +26,9 @@ export const RequireAdmin = React.lazy(
   () => import("./requireAdmin/RequireAdmin")
 );
 
+export const RequireTeam = React.lazy(
+  () => import("./requireTeam/RequireTeam")
+);
 export const PlayerRegistration = React.lazy(
   () => import("../components/pages/playerRegisteration/playerRegisteration")
 );
@@ -57,4 +60,16 @@ export const EmailTemplateForm = React.lazy(
 
 export const PlayerDetail = React.lazy(
   () => import("../components/pages/player/playerDetail")
+);
+
+export const AdminAuction = React.lazy(
+  () => import("../components/pages/admin/adminAuction")
+);
+
+export const TeamAuction = React.lazy(
+  () => import("../components/pages/team/teamAuction")
+);
+
+export const PlayerForTeam = React.lazy(
+  () => import("../components/team/player/player")
 );

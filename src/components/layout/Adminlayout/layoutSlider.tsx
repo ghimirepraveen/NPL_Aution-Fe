@@ -8,7 +8,7 @@ import { MdGroups2 } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 
 import useMisc from "../../../hooks/useMics";
-import { SUPER_ADMIN, ADMIN } from "../../../constants/userRole";
+import { SUPER_ADMIN, ADMIN, TEAM } from "../../../constants/userRole";
 
 export default function AdminLayoutSider({
   closeMenu,
@@ -23,6 +23,8 @@ export default function AdminLayoutSider({
     : false;
 
   const isAdmin = authData?.data?.userType?.includes(ADMIN) ? true : false;
+
+  const isTeam = authData?.data?.userType?.includes(TEAM) ? true : false;
 
   const menuItems = [
     (isSuperAdmin || isAdmin) && {
@@ -50,6 +52,26 @@ export default function AdminLayoutSider({
     (isSuperAdmin || isAdmin) && {
       key: "/admin/email-templates",
       label: <Link to="/admin/email-templates">Email Templates</Link>,
+      icon: <IoIosSettings />,
+    },
+    (isSuperAdmin || isAdmin) && {
+      key: "/admin/admin-auction",
+      label: <Link to="/admin/admin-auction">Admin Auction</Link>,
+      icon: <IoIosSettings />,
+    },
+    isTeam && {
+      key: "/team",
+      label: <Link to="/team">Team Dashboard</Link>,
+      icon: <IoIosSettings />,
+    },
+    isTeam && {
+      key: "/team/players",
+      label: <Link to="/team/players">Team Players</Link>,
+      icon: <IoIosSettings />,
+    },
+    isTeam && {
+      key: "/team/auction",
+      label: <Link to="/team/auction">Team Auction</Link>,
       icon: <IoIosSettings />,
     },
   ].filter(Boolean) as MenuProps["items"];

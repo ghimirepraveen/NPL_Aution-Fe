@@ -1,45 +1,33 @@
 import * as React from "react";
-import { Table, Input, Button } from "antd";
+import { Table, Input } from "antd";
 
 import usePlayerFetchTeam from "../../../service/team/player/usePlayerFetch";
 
-import usePlayerFetch from "../../../service/admin/player/usePlayerFetch";
-
-import PlayerFormModal from "../player/form/playerModel";
 import TableSkeleton from "../../skeleton/tableSkeleton/TableSkeleton";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 import type { PlayerType } from "../../../types/interfaces";
 import type { TablePaginationConfig } from "antd";
 import useMisc from "../../../hooks/useMics";
-
-import { ADMIN, SUPER_ADMIN, TEAM } from "../../../constants/userRole";
-
 export default function Player() {
+  const navigate = useNavigate();
   const { authData } = useMisc();
   const [queryParams, setQueryParams] = React.useState<{
     page: number;
     limit: number;
     search?: string;
+    teams?: string;
   }>({
     page: 1,
     limit: 10,
     search: undefined,
+    teams: authData?.data?._id || "",
   });
 
-  const [activePlayer, setActivePlayer] = React.useState<PlayerType | null>(
-    null
-  );
-  const [showPlayerFormModal, setShowPlayerFormModal] = React.useState(false);
-
   const playerFetchTeamResult = usePlayerFetchTeam(queryParams);
-  const playerFetchResult = usePlayerFetch(queryParams);
 
-  const isTeamUser = authData?.data.userType === TEAM;
-  const isLoading = isTeamUser
-    ? playerFetchTeamResult.isLoading
-    : playerFetchResult.isLoading;
-  const data = isTeamUser ? playerFetchTeamResult.data : playerFetchResult.data;
+  const { isLoading, data } = playerFetchTeamResult;
 
   const handlePaginationChange = (pagination: TablePaginationConfig) => {
     setQueryParams({
@@ -59,6 +47,10 @@ export default function Player() {
     }
   };
 
+  const handleViewPlayer = (player: PlayerType) => {
+    navigate(`/players/${player._id}`);
+  };
+
   const handleSearch = (value: string) => {
     if (value === "") {
       return setQueryParams({
@@ -73,21 +65,6 @@ export default function Player() {
       limit: 10,
       search: value as string,
     });
-  };
-
-  const handleAddPlayer = () => {
-    setActivePlayer(null);
-    setShowPlayerFormModal(true);
-  };
-
-  const handleViewPlayer = (player: PlayerType) => {
-    setActivePlayer(player);
-    setShowPlayerFormModal(true);
-  };
-
-  const hidePlayerFormModal = () => {
-    setActivePlayer(null);
-    setShowPlayerFormModal(false);
   };
 
   const columns = [
@@ -153,11 +130,7 @@ export default function Player() {
 
   return (
     <div>
-      <div className="flex justify-end">
-        <Button type="primary" onClick={handleAddPlayer}>
-          Create New Player
-        </Button>
-      </div>
+      <div className="flex justify-end"></div>
       <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-3xl font-semibold capitalize text-neutral-700">
           Player{" "}
@@ -203,12 +176,6 @@ export default function Player() {
           />
         )}
       </div>
-
-      <PlayerFormModal
-        open={showPlayerFormModal}
-        activePlayer={activePlayer}
-        hideModal={hidePlayerFormModal}
-      />
     </div>
   );
 }

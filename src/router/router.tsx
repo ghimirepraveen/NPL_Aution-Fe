@@ -13,6 +13,10 @@ import {
   EmailTemplate,
   EmailTemplateForm,
   PlayerDetail,
+  AdminAuction,
+  RequireTeam,
+  TeamAuction,
+  PlayerForTeam,
 } from "./import";
 
 const router = createBrowserRouter([
@@ -75,6 +79,32 @@ const router = createBrowserRouter([
           {
             path: "email-template/:slug",
             element: <EmailTemplateForm />,
+          },
+          {
+            path: "admin-auction",
+            element: <AdminAuction />,
+          },
+        ],
+      },
+      {
+        path: "team",
+        element: <RequireTeam />,
+        children: [
+          {
+            path: "",
+            //element: <Dashboard />,
+          },
+          {
+            path: "players",
+            element: <PlayerForTeam />,
+          },
+          {
+            path: "players/:id",
+            element: <PlayerDetail />,
+          },
+          {
+            path: "auction",
+            element: <TeamAuction />,
           },
         ],
       },

@@ -8,6 +8,7 @@ import queryKeys from "../../../constants/reactQuery";
 
 export default function useSiteSettingUpdate() {
   const queryClient = useQueryClient();
+  console.log("useSiteSettingUpdate");
 
   return useMutation({
     mutationFn: (data: SiteSetting) => mutator("PUT", "/site-setting", data),

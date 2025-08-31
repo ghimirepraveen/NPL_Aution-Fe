@@ -40,7 +40,9 @@ export default function Team() {
   return (
     <div>
       <div className="mb-8 flex items-center justify-between">
-        <h1>Team Details</h1>
+        <h2 className="text-3xl font-bold mb-6 text-left text-black-700 tracking-wide">
+          Team Details
+        </h2>
 
         {(authData?.data?.userType === SUPER_ADMIN ||
           authData?.data?.userType === ADMIN) && (
