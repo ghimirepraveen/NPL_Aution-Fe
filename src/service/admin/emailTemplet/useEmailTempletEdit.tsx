@@ -5,6 +5,7 @@ import type { EmailTemplate, SuccessData } from "../../../types/interfaces";
 import handleSuccess from "../../../utils/handler/success";
 import { useQueryClient } from "@tanstack/react-query";
 import queryKeys from "../../../constants/reactQuery";
+import handleError from "../../../utils/handler/error";
 
 export default function useEmailTemplateEdit(slug: string) {
   const queryClient = useQueryClient();
@@ -18,6 +19,9 @@ export default function useEmailTemplateEdit(slug: string) {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.admin.emailTemplet.details, { slug }],
       });
+    },
+    onError: (error: any) => {
+      handleError(error);
     },
   });
 }

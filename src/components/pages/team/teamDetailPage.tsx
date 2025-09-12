@@ -55,19 +55,34 @@ export default function Team() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <DataCard title="Team Name">
-          <p>{data.data.fullName}</p>
-        </DataCard>
-        <DataCard title="Remaining Budget">
-          <p>{data.data.remainingBudget}</p>
-        </DataCard>
-        <DataCard title="Total Spend">
-          <p>{data.data.budget - data.data.remainingBudget}</p>
-        </DataCard>
-        <DataCard title="Total Players">
-          <p>{data.data.players?.length ?? 0}</p>
-        </DataCard>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div className="flex items-center justify-center">
+          <img
+            src={data.data.image || "/default-team.png"}
+            alt={data.data.fullName}
+            className="w-64 h-64 object-cover rounded-xl shadow-lg border border-gray-200 bg-gray-100"
+          />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <DataCard title="Team Name">
+            <p className="font-semibold text-lg">{data.data.fullName}</p>
+          </DataCard>
+          <DataCard title="Remaining Budget">
+            <p className="font-semibold text-lg text-green-600">
+              {data.data.remainingBudget}
+            </p>
+          </DataCard>
+          <DataCard title="Total Spend">
+            <p className="font-semibold text-lg text-red-600">
+              {data.data.budget - data.data.remainingBudget}
+            </p>
+          </DataCard>
+          <DataCard title="Total Players">
+            <p className="font-semibold text-lg">
+              {data.data.players?.length ?? 0}
+            </p>
+          </DataCard>
+        </div>
 
         <div className="col-span-full mt-8">
           <div className="bg-white rounded-xl shadow p-6">

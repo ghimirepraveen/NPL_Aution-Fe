@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import mutator from "../mutator";
 import handleSuccess from "../../utils/handler/success";
+import handleError from "../../utils/handler/error";
 
 import type {
   ChangePasswordResponse,
@@ -18,5 +19,8 @@ export default function useChangePassword() {
     mutationFn: (data: ChangePasswordVariables) =>
       mutator("POST", "/auth/change-password", data),
     onSuccess: (data) => handleSuccess(data),
+    onError: (error: any) => {
+      handleError(error);
+    },
   });
 }

@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import useMisc from "../../hooks/useMics";
 import mutator from "../../service/mutator";
 import { setAccessToken, setRefreshToken } from "../../utils/auth";
+import handleError from "../../utils/handler/error";
 
 type LoginPayload = {
   email: string;
@@ -24,6 +25,9 @@ const useLogin = () => {
       if (data?.data?.accessToken) setAccessToken(data.data.accessToken);
       if (data?.data?.refreshToken) setRefreshToken(data.data.refreshToken);
       authRefetch();
+    },
+    onError: (error: any) => {
+      handleError(error);
     },
   });
 };

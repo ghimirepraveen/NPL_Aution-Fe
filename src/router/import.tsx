@@ -73,3 +73,9 @@ export const TeamAuction = React.lazy(
 export const PlayerForTeam = React.lazy(
   () => import("../components/team/player/player")
 );
+export const PlayerDashboard = React.lazy(
+  () => import("../components/team/player/dashboard/dashboard")
+);
+export const Dashboard = React.lazy(
+  () => import("../components/admin/dashboard/dashboard")
+);

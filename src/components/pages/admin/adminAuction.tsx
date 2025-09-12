@@ -4,6 +4,7 @@ import useMisc from "../../../hooks/useMics";
 import { Row, Col, Card, Button } from "antd";
 
 const AdminAuction = () => {
+  const logsEndRef = React.useRef<HTMLDivElement>(null);
   const { authData } = useMisc();
   const socketRef = useAuctionSocket("admin", authData?.data?._id);
   const [logs, setLogs] = useState<string[]>([]);
@@ -14,7 +15,6 @@ const AdminAuction = () => {
     const socket = socketRef.current;
     if (!socket) return;
 
-    // Listen for logs
     socket.on("auction-log", (message: string) => {
       setLogs((prev) => [...prev, message]);
 
@@ -23,13 +23,11 @@ const AdminAuction = () => {
       }
     });
 
-    // Listen for new player
     socket.on("new-player", (player) => {
       setCurrentPlayer(player);
       setCurrentBid(player.baseRate);
     });
 
-    // When a player is unsold or auction finalized, remove current player
     socket.on("unsold-player", () => {
       setCurrentPlayer(null);
     });
@@ -45,6 +43,13 @@ const AdminAuction = () => {
       socket.off("bid-winner");
     };
   }, [socketRef]);
+
+  // Auto-scroll to latest log
+  useEffect(() => {
+    if (logsEndRef.current) {
+      logsEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [logs]);
 
   const startBidding = () => {
     socketRef.current?.emit("start-bidding");
@@ -92,12 +97,18 @@ const AdminAuction = () => {
 
       <div>
         <h3 className="font-semibold">Logs:</h3>
-        <div className="h-60 overflow-y-auto border p-2 bg-gray-50 rounded">
+        <div className="h-80 overflow-y-auto border p-2 bg-gray-50 rounded">
           {logs.map((log, i) => (
-            <p key={i} className="text-sm">
-              {log}
-            </p>
+            <div
+              key={i}
+              className="flex items-center gap-2 py-2 px-3 mb-2 rounded bg-white shadow-sm border border-gray-200 last:mb-0"
+              style={{ animation: "fadeIn 0.3s" }}
+            >
+              <span className="inline-block w-2 h-2 rounded-full bg-blue-400 mr-2"></span>
+              <span className="text-gray-700 text-sm font-medium">{log}</span>
+            </div>
           ))}
+          <div ref={logsEndRef} />
         </div>
       </div>
     </div>

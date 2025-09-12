@@ -8,6 +8,7 @@ import type {
 import handleSuccess from "../../../utils/handler/success";
 import { useQueryClient } from "@tanstack/react-query";
 import queryKeys from "../../../constants/reactQuery";
+import handleError from "../../../utils/handler/error";
 
 export default function usePlayerRegistration() {
   const queryClient = useQueryClient();
@@ -21,6 +22,9 @@ export default function usePlayerRegistration() {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.admin.player.list],
       });
+    },
+    onError: (error: any) => {
+      handleError(error);
     },
   });
 }

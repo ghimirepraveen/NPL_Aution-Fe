@@ -5,6 +5,7 @@ import type { TeamRequest, SuccessData } from "../../../types/interfaces";
 import handleSuccess from "../../../utils/handler/success";
 import { useQueryClient } from "@tanstack/react-query";
 import queryKeys from "../../../constants/reactQuery";
+import handleError from "../../../utils/handler/error";
 
 export default function useTeamEdit(teamId: string) {
   const queryClient = useQueryClient();
@@ -17,6 +18,9 @@ export default function useTeamEdit(teamId: string) {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.admin.team.list],
       });
+    },
+    onError: (error: any) => {
+      handleError(error);
     },
   });
 }

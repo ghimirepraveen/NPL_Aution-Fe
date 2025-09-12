@@ -9,6 +9,7 @@ import { IoMdSettings } from "react-icons/io";
 import type { EmailTemplateType } from "../../../types/interfaces";
 import type { TablePaginationConfig } from "antd";
 import { useNavigate } from "react-router-dom";
+import handleError from "../../../utils/handler/error";
 
 export default function EmailTemplate() {
   const navigate = useNavigate();
@@ -22,7 +23,12 @@ export default function EmailTemplate() {
     search: undefined,
   });
 
-  const { isLoading, data } = useEmailTemplateFetch(queryParams);
+  const { isLoading, data, isError, error } =
+    useEmailTemplateFetch(queryParams);
+
+  if (isError && error) {
+    handleError(error);
+  }
 
   const handlePaginationChange = (pagination: TablePaginationConfig) => {
     setQueryParams({

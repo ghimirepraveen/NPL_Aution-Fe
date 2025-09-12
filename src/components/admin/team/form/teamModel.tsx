@@ -4,6 +4,7 @@ import type { TeamType, TeamRequest } from "../../../../types/interfaces";
 
 import useTeamCreate from "../../../../service/admin/team/useTeamRegisteration";
 import useTeamEdit from "../../../../service/admin/team/useTeamEdit";
+import ImageUpload from "../../../common/imageUpload";
 
 export default function TeamFormModal({
   open,
@@ -15,7 +16,7 @@ export default function TeamFormModal({
   activeTeam: TeamType | null;
 }) {
   return (
-    <Modal open={open} onCancel={hideModal} footer={null}>
+    <Modal open={open} onCancel={hideModal} footer={null} destroyOnClose>
       <TeamForm hideModal={hideModal} activeTeam={activeTeam} />
     </Modal>
   );
@@ -36,7 +37,23 @@ function TeamForm({
 
   React.useEffect(() => {
     if (activeTeam) {
-      form.setFieldsValue(activeTeam);
+      const normalizedData = {
+        ...activeTeam,
+        image: activeTeam.image
+          ? Array.isArray(activeTeam.image)
+            ? activeTeam.image
+            : [
+                {
+                  uid: "-1",
+                  name: "image",
+                  status: "done",
+                  url: activeTeam.image,
+                  response: { response: { data: { path: activeTeam.image } } },
+                },
+              ]
+          : [],
+      };
+      form.setFieldsValue(normalizedData);
     } else {
       form.resetFields();
     }
@@ -44,26 +61,29 @@ function TeamForm({
 
   const handleSubmit = async (values: TeamRequest) => {
     try {
+      const payload = {
+        ...values,
+        image: values?.image?.[0]?.response?.response?.data?.path || "",
+      };
+
       if (isEdit && teamId) {
-        const { email, ...rest } = values;
+        const { email, ...rest } = payload;
         await TeamEdit.mutateAsync(rest);
       } else {
-        await TeamCreate.mutateAsync(values);
+        await TeamCreate.mutateAsync(payload);
       }
       hideModal();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   return (
     <Form form={form} layout="vertical" onFinish={handleSubmit}>
       <div>
-        {isEdit ? (
-          <h2 className="text-2xl font-semibold">Edit Team</h2>
-        ) : (
-          <h2 className="text-2xl font-semibold">Create New Team</h2>
-        )}
+        <h2 className="text-2xl font-semibold">
+          {isEdit ? "Edit Team" : "Create New Team"}
+        </h2>
         <div className="mt-2 h-px bg-neutral-200" />
       </div>
 
@@ -75,14 +95,12 @@ function TeamForm({
         >
           <Input placeholder="Enter your full name" size="large" />
         </Form.Item>
-        {/* Email not editable */}
+
         <Form.Item
           name="email"
           label="Email address"
           rules={[{ required: true, message: "Please enter your email" }]}
         >
-          {/* disable when editing only  */}
-
           <Input
             placeholder="Enter your email"
             size="large"
@@ -100,23 +118,25 @@ function TeamForm({
 
         <Form.Item
           name="image"
-          label="Image URL"
-          rules={[{ required: true, message: "Please enter image URL" }]}
+          label="Team Image"
+          valuePropName="fileList"
+          rules={[{ required: true, message: "Please upload an image" }]}
+          getValueFromEvent={(e) =>
+            Array.isArray(e?.fileList) ? e.fileList : []
+          }
         >
-          <Input placeholder="Enter image URL" size="large" />
+          <ImageUpload
+            listType="picture-card"
+            maxCount={1}
+            hideUploader={form.getFieldValue("image")?.length > 0}
+          />
         </Form.Item>
 
         <div className="flex justify-end space-x-2 border-t pt-3">
           <Button onClick={hideModal}>Cancel</Button>
-          {isEdit ? (
-            <Button type="primary" htmlType="submit">
-              Update
-            </Button>
-          ) : (
-            <Button type="primary" htmlType="submit">
-              Add
-            </Button>
-          )}
+          <Button type="primary" htmlType="submit">
+            {isEdit ? "Update" : "Add"}
+          </Button>
         </div>
       </div>
     </Form>

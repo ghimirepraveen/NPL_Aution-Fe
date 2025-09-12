@@ -5,16 +5,23 @@ import type { PlayerRegistrationData } from "../../../types/interfaces";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import IMAGE from "../../../assets/image.png";
+import ImageUpload from "../../../components/common/imageUpload";
 
 const PlayerRegistration = () => {
   const [form] = Form.useForm();
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
+
   const playerRegistrationMutation = usePlayerRegistration();
   const navigate = useNavigate();
 
   const handleSubmit = async (data: PlayerRegistrationData) => {
     try {
-      const response = await playerRegistrationMutation.mutateAsync(data);
+      const payload = {
+        ...data,
+        image: data?.image?.[0]?.response.response.data.path || "",
+      };
+      const response = await playerRegistrationMutation.mutateAsync(payload);
       if (response) {
         navigate("/thankyou");
       }
@@ -193,13 +200,33 @@ const PlayerRegistration = () => {
               placeholder="Catches"
             />
           </Form.Item>
-
           <Form.Item
-            label="Image URL"
             name="image"
-            rules={[{ required: true, message: "Please enter image URL" }]}
+            label="Player Image"
+            valuePropName="fileList"
+            rules={[{ required: true, message: "Please upload an image" }]}
+            getValueFromEvent={(e) =>
+              Array.isArray(e?.fileList) ? e.fileList : []
+            }
           >
-            <Input placeholder="Enter image URL" className="h-12 rounded-md" />
+            <ImageUpload
+              listType="picture-card"
+              maxCount={1}
+              hideUploader={form.getFieldValue("image")?.length > 0}
+              onChange={(info: any) => {
+                // Check if uploading
+                if (info.file.status === "uploading") {
+                  setImageUploading(true);
+                }
+                if (info.file.status === "done") {
+                  setImageUploading(false);
+                  // Optionally set form value here if needed
+                }
+                if (info.file.status === "error") {
+                  setImageUploading(false);
+                }
+              }}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -209,8 +236,9 @@ const PlayerRegistration = () => {
               block
               loading={loading}
               className="h-12 rounded-md bg-gray-300 border-gray-300"
+              disabled={imageUploading}
             >
-              Register
+              {imageUploading ? "Uploading Image..." : "Register"}
             </Button>
           </Form.Item>
         </Form>

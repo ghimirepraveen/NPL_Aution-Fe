@@ -20,6 +20,8 @@ type OutletContextType = {
           isBlocked: boolean;
           userType: Role;
           image: string;
+          budget: number;
+          remainingBudget: number;
         };
       };
   authLogout: () => void;

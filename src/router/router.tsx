@@ -17,6 +17,8 @@ import {
   RequireTeam,
   TeamAuction,
   PlayerForTeam,
+  PlayerDashboard,
+  Dashboard,
 } from "./import";
 
 const router = createBrowserRouter([
@@ -48,7 +50,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            //element: <Dashboard />,
+            element: <Dashboard />,
           },
           {
             path: "players",
@@ -92,7 +94,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            //element: <Dashboard />,
+            element: <PlayerDashboard />,
           },
           {
             path: "players",

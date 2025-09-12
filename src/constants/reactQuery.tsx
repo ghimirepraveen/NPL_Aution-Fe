@@ -22,6 +22,9 @@ const queryKeys = {
     bidLog: {
       list: "adminBidLogList",
     },
+    dashboard: {
+      main: "adminDashboard",
+    },
   },
 };
 

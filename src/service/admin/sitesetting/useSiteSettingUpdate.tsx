@@ -5,6 +5,7 @@ import type { SiteSetting, SuccessData } from "../../../types/interfaces";
 import handleSuccess from "../../../utils/handler/success";
 import { useQueryClient } from "@tanstack/react-query";
 import queryKeys from "../../../constants/reactQuery";
+import handleError from "../../../utils/handler/error";
 
 export default function useSiteSettingUpdate() {
   const queryClient = useQueryClient();
@@ -18,6 +19,9 @@ export default function useSiteSettingUpdate() {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.admin.site.settings],
       });
+    },
+    onError: (error: any) => {
+      handleError(error);
     },
   });
 }
